@@ -1,12 +1,9 @@
 type Matrix = Array<number[]>;
 
-// function range(n: number): number[] {
-// }
-
-function createZeroMatrix(m: number, n: number): Matrix {
-  return Array(m)
+function matrix(rows: number, cols: number): Matrix {
+  return Array(rows)
     .fill([])
-    .map(() => Array(n).fill(0));
+    .map(() => Array(cols).fill(0));
 }
 
 function getMatrixShape(a: Matrix): [number, number] {
@@ -26,10 +23,10 @@ export function dot(a: Matrix, b: Matrix): Matrix {
   const [bRows, bCols] = getMatrixShape(b);
   if (aCols !== bRows) {
     throw new Error(
-      `incorrect matrix shape: matrix 1 has ${aCols} cols, but matrix 2: ${aRows} rows`
+      `incorrect matrix shape: matrix1 has ${aCols} cols, but matrix2: ${aRows} rows`
     );
   }
-  const result = createZeroMatrix(aRows, bCols);
+  const result = matrix(aRows, bCols);
   for (let i = 0; i < aRows; i++) {
     for (let j = 0; j < bCols; j++) {
       const aRow = getMatrixRow(a, i);
@@ -42,5 +39,22 @@ export function dot(a: Matrix, b: Matrix): Matrix {
   return result;
 }
 
-const matrixA = [[1, 2], [3, 4], [1, 1]];
-const matrixB = [[1, 2], [3, 4]];
+const input = [[0, 0], [0, 1], [1, 0], [1, 1]];
+const output = [[0], [1], [1], [1]];
+
+function l2norm(vector: number[]) {
+  const norm =  Math.sqrt(vector.map(value => Math.pow(value, 2)).reduce((acc, value) => acc + value, 0))
+  return vector.map(value => value / norm)
+}
+
+const weights = matrix(input[0].length, input.length - 1).map(row =>
+  row.map(() => Math.random())
+);
+
+// for (let i = 0; i < 1000; i++) {
+//   // forward
+//   const hidden = dot(input, weights)
+// }
+console.log(weights);
+const hidden = dot(input, weights);
+console.log(hidden);
