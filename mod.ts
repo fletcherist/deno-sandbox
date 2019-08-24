@@ -43,8 +43,12 @@ const input = [[0, 0], [0, 1], [1, 0], [1, 1]];
 const output = [[0], [1], [1], [1]];
 
 function l2norm(vector: number[]) {
-  const norm =  Math.sqrt(vector.map(value => Math.pow(value, 2)).reduce((acc, value) => acc + value, 0))
-  return vector.map(value => value / norm)
+  const norm = Math.sqrt(
+    vector
+      .map(value => Math.pow(value, 2))
+      .reduce((acc, value) => acc + value, 0)
+  );
+  return vector.map(value => value / norm);
 }
 
 const weights = matrix(input[0].length, input.length - 1).map(row =>
